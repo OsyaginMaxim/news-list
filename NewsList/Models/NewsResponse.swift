@@ -14,7 +14,7 @@ struct NewsResponse: Codable {
 
 struct NewsModelDTO: Codable {
     let items: [NewsModel]?
-    let cursor: String
+    let cursor: String?
 }
 
 struct NewsModel: Codable {
@@ -67,14 +67,14 @@ struct ContentModel: Codable {
 
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.decode(String.self, forKey: .id)
+        id = try? container.decode(String?.self, forKey: .id)
         type = try container.decode(ContentType?.self, forKey: .type)
 
         switch type {
-        case .video, .audio: data = try container.decode(MediaModel.self, forKey: .data)
-        case .image, .gif: data = try container.decode(ImageDataModel.self, forKey: .data)
-        case .text: data = try container.decode(TextModel.self, forKey: .data)
-        case .tags: data = try container.decode(TagsModel.self, forKey: .data)
+        case .video, .audio: data = try container.decode(MediaModel?.self, forKey: .data)
+        case .image, .gif: data = try container.decode(ImageDataModel?.self, forKey: .data)
+        case .text: data = try container.decode(TextModel?.self, forKey: .data)
+        case .tags: data = try container.decode(TagsModel?.self, forKey: .data)
         case .none: data = nil
         }
     }

@@ -8,5 +8,5 @@
 import Foundation
 
 protocol NewsListView: AnyObject {
-
+    var viewModel: NewsResponse? { get set }
 }

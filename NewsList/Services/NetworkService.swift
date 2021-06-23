@@ -47,6 +47,10 @@ final class ApiManager {
             request.httpBody = try? JSONSerialization.data(withJSONObject: params, options: .fragmentsAllowed)
         }
 
+        if let url = components?.url {
+            request = URLRequest(url: url)
+        }
+
         request.httpMethod = method.rawValue
         request.setValue("Application/json", forHTTPHeaderField: "Content-Type")
 
@@ -66,10 +70,10 @@ final class ApiManager {
         }).resume()
     }
 
-    func getNews(first: Int, after: String, orderBy: String, closure: @escaping (NewsResponse) -> Void) {
+    func getNews(first: Int, after: String, orderBy: String, closure: @escaping (Result<NewsResponse, Error>) -> Void) {
         let parameters = [
-            "first": first,
-            "after": after,
+            "first": "\(first)",
+            "after": "\(after)",
             "orderBy": orderBy
         ] as [String : Any]
 
@@ -78,12 +82,7 @@ final class ApiManager {
             params: parameters,
             path: "posts/v1/posts"
         ) { (complition: Result<NewsResponse, Error>) in
-            switch complition {
-            case .failure(let error):
-                return
-            case let .success(result):
-                closure(result)
-            }
+            closure(complition)
         }
     }
 }

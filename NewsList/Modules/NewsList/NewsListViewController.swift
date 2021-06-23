@@ -8,6 +8,11 @@
 import UIKit
 
 class NewsListViewController: UIViewController, NewsListView, NewsListPresentable {
+    var viewModel: NewsResponse? {
+        didSet {
+            print(viewModel)
+        }
+    }
     var presenter: NewsListViewPresenter?
 
     // MARK: - UIViewController
@@ -16,6 +21,12 @@ class NewsListViewController: UIViewController, NewsListView, NewsListPresentabl
         super.viewDidLoad()
 
         setupView()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        presenter?.loadList()
     }
 
     // MARK: - Navigation

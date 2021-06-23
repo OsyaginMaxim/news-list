@@ -8,5 +8,11 @@
 import Foundation
 
 protocol NewsListViewPresenter: AnyObject {
-    init(view: NewsListView?)
+    init(
+        view: NewsListView?,
+        services: NewsFlowServices,
+        delegate: NewsListPresenterDelegete
+    )
+
+    func loadList()
 }

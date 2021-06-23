@@ -31,8 +31,10 @@ class NewsFlow: Flow {
     func start(navigation: UINavigationController, style: FlowPresentationStyle) {
         self.navigation = navigation
 
-        newsList = ModuleConfigurator.createNewsListModule().view
+        newsList = ModuleConfigurator.createNewsListModule(services: services, delegate: self).view
 
         self.navigation?.startFlow(with: newsList!, style: .replace)
     }
 }
+
+extension NewsFlow: NewsListPresenterDelegete {}

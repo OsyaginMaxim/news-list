@@ -12,16 +12,16 @@ import MediaPlayer
 protocol PlayerServiceProtocol: AnyObject {
     func currentTimeChanged(time: CMTime)
     func getDuration(duration: Double)
-    func newPodcast(podcast: MediaModel, episodeId: Int)
+    func newAudio(media: MediaModel)
     func changeStatus(isPlaying: Bool)
 }
 
 class Player: NSObject {
     weak var delegate: PlayerServiceProtocol?
 
-    var player = AVPlayer()
+    private var player = AVPlayer()
 
-    var timeObserverToken: Any?
+    private var timeObserverToken: Any?
 
     private var media: MediaModel?
 
@@ -81,14 +81,13 @@ class Player: NSObject {
 
         self.media = media
 
-//        delegate?.newPodcast(podcast: podcast, episodeId: episodeId)
+//        delegate?.newAudio()
 
         addPeriodicTimeObserver()
     }
 
-//    func getPodcast() -> (PodcastModelDTO?, EpisodModelDTO?) {
-//        let episode = podcast?.episode(with: episodeId ?? 0)
-//        return (podcast, episode)
+//    func getAudio() -> (MediaModel?) {
+//        return media
 //    }
 
     private func addPeriodicTimeObserver() {
