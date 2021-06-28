@@ -7,8 +7,14 @@
 
 import UIKit
 
-class NewsAuthorView: UIView {
-    lazy var avatarImageView: UIImageView = {
+class NewsAuthorTableViewCell: UITableViewCell {
+    var viewData: AuthorModel? {
+        didSet {
+            fillCell()
+        }
+    }
+
+    private lazy var avatarImageView: UIImageView = {
         let imageView = UIImageView()
 
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -16,7 +22,7 @@ class NewsAuthorView: UIView {
         return imageView
     }()
 
-    lazy var nameLabel: UILabel = {
+    private lazy var nameLabel: UILabel = {
         let label = UILabel()
 
         label.numberOfLines = 0
@@ -26,7 +32,7 @@ class NewsAuthorView: UIView {
         return label
     }()
 
-    lazy var createdAtLabel: UILabel = {
+    private lazy var createdAtLabel: UILabel = {
         let label = UILabel()
 
         label.numberOfLines = 0
@@ -38,8 +44,8 @@ class NewsAuthorView: UIView {
 
     required init?(coder aDecoder: NSCoder) { fatalError() }
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: NewsTextTableViewCell.classId())
 
         setupView()
     }
@@ -67,6 +73,8 @@ class NewsAuthorView: UIView {
                     equalTo: bottomAnchor,
                     constant: -10
                 ),
+                avatarImageView.heightAnchor.constraint(equalToConstant: 30),
+                avatarImageView.widthAnchor.constraint(equalToConstant: 30),
                 nameLabel.trailingAnchor.constraint(
                     equalTo: trailingAnchor,
                     constant: -20
@@ -93,5 +101,20 @@ class NewsAuthorView: UIView {
                 ),
             ]
         )
+    }
+
+    private func fillCell() {
+        guard let author = viewData else { return }
+
+        if
+            let photoModel = author.photo,
+            let photo = photoModel.data as? ImageDataModel,
+            let urlString = photo.small?.url,
+            let url = URL(string: urlString)
+        {
+            avatarImageView.load(url: url)
+        }
+
+        nameLabel.text = viewData?.name
     }
 }

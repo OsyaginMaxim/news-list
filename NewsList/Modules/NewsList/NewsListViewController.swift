@@ -8,9 +8,16 @@
 import UIKit
 
 class NewsListViewController: UIViewController, NewsListView, NewsListPresentable {
-    var viewModel: NewsResponse? {
+    private lazy var tableView: NewsListTableView = {
+        let table = NewsListTableView()
+        table.translatesAutoresizingMaskIntoConstraints = false
+
+        return table
+    }()
+
+    var viewData: NewsResponse? {
         didSet {
-            print(viewModel)
+            tableView.viewData = viewData?.data?.items
         }
     }
     var presenter: NewsListViewPresenter?
@@ -38,6 +45,14 @@ class NewsListViewController: UIViewController, NewsListView, NewsListPresentabl
     // MARK: - Utility
 
     private func setupView() {
-        view.backgroundColor = .yellow
+        view.addSubview(tableView)
+        NSLayoutConstraint.activate(
+            [
+                tableView.topAnchor.constraint(equalTo: view.topAnchor),
+                tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+                tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+                tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            ]
+        )
     }
 }

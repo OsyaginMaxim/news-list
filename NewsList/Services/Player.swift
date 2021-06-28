@@ -81,14 +81,8 @@ class Player: NSObject {
 
         self.media = media
 
-//        delegate?.newAudio()
-
         addPeriodicTimeObserver()
     }
-
-//    func getAudio() -> (MediaModel?) {
-//        return media
-//    }
 
     private func addPeriodicTimeObserver() {
         let timeScale = CMTimeScale(NSEC_PER_SEC)

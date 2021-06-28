@@ -168,6 +168,23 @@ struct ImageDataModel: Codable {
     let original: ImageInfoModel?
 }
 
+extension ImageDataModel {
+
+    var actualImage: ImageInfoModel? {
+        if original != nil {
+            return original
+        } else if medium != nil {
+            return medium
+        } else if large != nil {
+            return large
+        } else if small != nil {
+            return small
+        } else {
+            return extraSmall
+        }
+    }
+}
+
 struct ImageInfoModel: Codable {
     let url: String?
     let size: ContentSizeModel?

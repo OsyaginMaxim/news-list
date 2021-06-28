@@ -8,7 +8,11 @@
 import UIKit
 
 class NewsTextTableViewCell: UITableViewCell {
-
+    var viewData: ContentModel? {
+        didSet {
+            fillCell()
+        }
+    }
     lazy var contentLabel: UILabel = {
         let label = UILabel()
 
@@ -40,15 +44,20 @@ class NewsTextTableViewCell: UITableViewCell {
                     constant: -20
                 ),
                 contentLabel.topAnchor.constraint(
-                    equalTo: contentView.topAnchor,
-                    constant: 10
+                    equalTo: contentView.topAnchor
                 ),
                 contentLabel.bottomAnchor.constraint(
-                    equalTo: contentView.bottomAnchor,
-                    constant: -10
+                    equalTo: contentView.bottomAnchor
                 ),
             ]
         )
     }
-}
 
+    private func fillCell() {
+        guard
+            let textModel = viewData?.data as? TextModel,
+            let text = textModel.value
+        else { return }
+        contentLabel.text = text
+    }
+}

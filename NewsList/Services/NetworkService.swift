@@ -71,11 +71,14 @@ final class ApiManager {
     }
 
     func getNews(first: Int, after: String, orderBy: String, closure: @escaping (Result<NewsResponse, Error>) -> Void) {
-        let parameters = [
+        var parameters = [
             "first": "\(first)",
-            "after": "\(after)",
-            "orderBy": orderBy
-        ] as [String : Any]
+            "after": "\(after)"
+        ] as [String : String]
+
+        if !orderBy.isEmpty {
+            parameters["orderBy"] = orderBy
+        }
 
         self.requset(
             method: .get,

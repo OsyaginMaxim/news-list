@@ -37,12 +37,12 @@ class NewsListPresenter: NewsListViewPresenter {
     }
 
     func loadList() {
-        services.networking.getNews(first: 10, after: cursor ?? "", orderBy: "createdAt") { [weak self] result in
+        services.networking.getNews(first: 100, after: cursor ?? "", orderBy: "") { [weak self] result in
             guard let self = self else { return }
 
             switch result {
             case let .success(response):
-                self.view?.viewModel = response
+                self.view?.viewData = response
             case .failure(_):
                 break
             }

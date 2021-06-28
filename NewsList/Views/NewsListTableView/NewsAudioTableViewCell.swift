@@ -8,16 +8,43 @@
 import UIKit
 
 class NewsAudioTableViewCell: UITableViewCell {
+    var viewData: MediaModel? {
+        didSet {
+            fillCell()
+        }
+    }
+    private lazy var playButton: UIButton = {
+        let button = UIButton()
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
+        return button
+    }()
+
+    private lazy var progress: ProgressSlider = {
+        let progress = ProgressSlider()
+        progress.minimumValue = 0.0
+
+        return progress
+    }()
+
+    private lazy var nameLabel: UILabel = {
+        let label = UILabel()
+
+        return label
+    }()
+
+    required init?(coder aDecoder: NSCoder) { fatalError() }
+
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: NewsTextTableViewCell.classId())
+
+        setupView()
     }
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
+    private func setupView() {
 
-        // Configure the view for the selected state
     }
 
+    private func fillCell() {
+
+    }
 }
